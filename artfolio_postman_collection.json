@@ -1,0 +1,467 @@
+{
+	"info": {
+		"_postman_id": "73b6db43-dede-48bd-8ae4-df7f60f93d5e",
+		"name": "ArtFolio API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46697016",
+		"_collection_link": "https://saidulalimallick.postman.co/workspace/All_Collection_Developed_By_Sam~e9243a63-b8fa-4032-92be-30fa240f00e9/collection/46697016-73b6db43-dede-48bd-8ae4-df7f60f93d5e?action=share&source=collection_link&creator=46697016"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"testuser1\",\n    \"email\": \"test1@example.com\",\n    \"password\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user.\n\nStatus Codes:\n- 201 Created: User created successfully.\n- 409 Conflict: Email or Username already exists."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.access_token) {",
+									"    pm.collectionVariables.set(\"access_token\", jsonData.access_token);",
+									"    console.log(\"Access token set successfully\");",
+									"}",
+									"if (jsonData.refresh_token) {",
+									"    pm.collectionVariables.set(\"refresh_token\", jsonData.refresh_token);",
+									"    console.log(\"Refresh token set successfully\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "test1@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Authenticate user and get access token.\n\nAutomatically sets the `access_token` and `refresh_token` collection variables on success."
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.access_token) {",
+									"    pm.collectionVariables.set(\"access_token\", jsonData.access_token);",
+									"}",
+									"if (jsonData.refresh_token) {",
+									"    pm.collectionVariables.set(\"refresh_token\", jsonData.refresh_token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh_token\": \"{{refresh_token}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						},
+						"description": "Get a new access token using a refresh token."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Account Details",
+			"item": [
+				{
+					"name": "Get Account Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/account-details",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account-details"
+							]
+						},
+						"description": "Get current user's account details (includes email)."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Account Details",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "My New Name",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "Updated bio via account details",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Optional: New profile image",
+									"type": "file",
+									"src": "/C:/Users/saidu/Downloads/Images/IMG_20250914_111824934_HDR.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/account-details/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account-details",
+								""
+							]
+						},
+						"description": "Update account details (full_name, bio, image)."
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate Account",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/account-details/deactivate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account-details",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Retrieve list of active users."
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Profile (By Username)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/testuser",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"testuser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Artworks",
+			"item": [
+				{
+					"name": "Create Artwork",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "My Masterpiece",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "A wonderful work of art",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/saidu/Downloads/Images/1305088.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/artworks/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artworks",
+								""
+							]
+						},
+						"description": "Create a new artwork. Requires 'title' and 'image' file."
+					},
+					"response": []
+				},
+				{
+					"name": "List Artworks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artworks",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artworks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Artwork by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artworks/{{artwork_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artworks",
+								"{{artwork_id}}"
+							]
+						},
+						"description": "Get details of a specific artwork."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Artwork",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Updated Title",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Updated Description",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Optional: Upload new image to replace existing one",
+									"type": "file",
+									"src": "/C:/Users/saidu/Downloads/Images/Leo-1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/artworks/{{artwork_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artworks",
+								"{{artwork_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Artwork",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/artworks/{{artwork_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artworks",
+								"{{artwork_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refresh_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "artwork_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
