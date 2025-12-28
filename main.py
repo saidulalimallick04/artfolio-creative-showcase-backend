@@ -99,18 +99,45 @@ async def root(request: Request):
         
         # TECH STACK
         "tech_stack": [
-            {"icon": "fab fa-python", "name": "Python"},
-            {"icon": "fas fa-bolt", "name": "FastAPI"},
-            {"icon": "fas fa-database", "name": "MongoDB"},
-            {"icon": "fas fa-shield-alt", "name": "JWT Auth"},
-            {"icon": "fas fa-cloud", "name": "Cloudinary"},
+            {
+                "icon": "fab fa-python", 
+                "name": "Python"
+            },
+            {
+                "icon": "fas fa-bolt", 
+                "name": "FastAPI"
+            },
+            {
+                "icon": "fas fa-database", 
+                "name": "MongoDB"
+            },
+            {
+                "icon": "fas fa-shield-alt", 
+                "name": "JWT Auth"
+            },
+            {
+                "icon": "fas fa-cloud", 
+                "name": "Cloudinary"
+            },
         ],
         
         # QUICK LINKS
         "quick_links": [
-            {"icon": "fas fa-book", "name": "Swagger UI", "url": "/docs"},
-            {"icon": "fas fa-file-alt", "name": "ReDoc", "url": "/redoc"},
-            {"icon": "fab fa-github", "name": "Repository", "url": "https://github.com/saidulalimallick04/artfolio-creative-showcase-backend"},
+            {
+                "icon": "fas fa-book", 
+                "name": "Swagger UI", 
+                "url": "/docs"
+            },
+            {
+                "icon": "fas fa-file-alt", 
+                "name": "ReDoc", 
+                "url": "/redoc"
+            },
+            {
+                "icon": "fab fa-github", 
+                "name": "Repository", 
+                "url": "https://github.com/saidulalimallick04/artfolio-creative-showcase-backend"
+            },
         ],
         
         # SERVER STATUS

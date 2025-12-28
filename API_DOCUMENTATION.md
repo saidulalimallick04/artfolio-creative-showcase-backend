@@ -43,7 +43,8 @@ Authenticate and receive Access & Refresh tokens.
 {
   "access_token": "eyJhbGciOiJIUzI1Ni...",
   "token_type": "bearer",
-  "refresh_token": "eyJhbGciOiJIUzI1Ni..."
+  "refresh_token": "eyJhbGciOiJIUzI1Ni...",
+  "username": "johndoe"
 }
 ```
 
@@ -110,6 +111,19 @@ Deactivate your account (soft delete).
 }
 ```
 
+### 4. Reactivate Account
+
+Reactivate your account.
+
+- **Endpoint**: `PATCH /account-details/reactivate`
+- **Response**:
+
+```json
+{
+  "message": "User account reactivated successfully"
+}
+```
+
 ---
 
 ## 👥 Users (Public)
@@ -135,7 +149,16 @@ Browse active community members.
 ]
 ```
 
-### 2. Get Public Profile
+### 2. Search Users
+
+`GET /api/v1/users/search`
+
+Search users by username or full name (fuzzy match).
+
+- **Parameters**: `q` (query) - Search term.
+- **Response**: List of User objects.
+
+### 3. Get Public Profile
 
 View a specific user's public details.
 
@@ -152,6 +175,30 @@ View a specific user's public details.
   "is_artist": true,
   "profile_image": "https://..."
 }
+```
+
+### 4. Get User Artworks
+
+Retrieve all artworks owned by a specific user.
+
+- **Endpoint**: `GET /api/v1/users/{user_id}/artworks`
+- **Response**:
+
+```json
+[
+  {
+    "id": "6512b3c...",
+    "title": "Sunset",
+    "description": "Oil on canvas",
+    "image_url": "https://res.cloudinary.com/...",
+    "owner": {
+      "id": "64f1a2b3c9e8...",
+      "username": "artist_one",
+      "full_name": "The Artist"
+    },
+    "created_at": "2023-10-01T12:00:00Z"
+  }
+]
 ```
 
 ---
@@ -190,17 +237,72 @@ Feed of artworks.
 
 - **Endpoint**: `GET /artworks`
 - **Query Params**: `skip`, `limit`
-- **Response**: Array of Artwork objects (see above).
+- **Response**:
 
-### 3. Get Artwork Details
+```json
+[
+  {
+    "id": "6512b3c...",
+    "title": "Sunset",
+    "description": "Oil on canvas",
+    "image_url": "https://res.cloudinary.com/...",
+    "owner": {
+      "id": "64f1a...",
+      "username": "artlover99"
+    },
+    "created_at": "2023-10-01T12:00:00Z"
+  }
+]
+```
+
+### 3. Search Artworks
+
+`GET /api/v1/artworks/search`
+
+Search artworks by title or description.
+
+- **Parameters**: `q` (query) - Search term.
+- **Response**:
+
+```json
+[
+  {
+    "id": "6512b3c...",
+    "title": "Sunset",
+    "description": "Oil on canvas",
+    "image_url": "https://res.cloudinary.com/...",
+    "owner": {
+      "id": "64f1a...",
+      "username": "artlover99"
+    },
+    "created_at": "2023-10-01T12:00:00Z"
+  }
+]
+```
+
+### 4. Get Artwork Details
 
 View a specific artwork.
 
 - **Endpoint**: `GET /artworks/{id}`
 - **Path Param**: `id` (e.g., `6512b3c...`)
-- **Response**: Single Artwork object.
+- **Response**:
 
-### 4. Update Artwork
+```json
+{
+  "id": "6512b3c...",
+  "title": "Sunset",
+  "description": "Oil on canvas",
+  "image_url": "https://res.cloudinary.com/...",
+  "owner": {
+    "id": "64f1a...",
+    "username": "artlover99"
+  },
+  "created_at": "2023-10-01T12:00:00Z"
+}
+```
+
+### 5. Update Artwork
 
 Update an artwork you own. Requires Auth.
 
@@ -208,9 +310,23 @@ Update an artwork you own. Requires Auth.
 - **Body** (`multipart/form-data`):
   - `title`: "New Title"
   - `image`: (new file)
-- **Response**: Updated Artwork object.
+- **Response**:
 
-### 5. Delete Artwork
+```json
+{
+  "id": "6512b3c...",
+  "title": "New Title",
+  "description": "Oil on canvas",
+  "image_url": "https://res.cloudinary.com/...",
+  "owner": {
+    "id": "64f1a...",
+    "username": "artlover99"
+  },
+  "created_at": "2023-10-01T12:00:00Z"
+}
+```
+
+### 6. Delete Artwork
 
 Remove an artwork you own. Requires Auth.
 

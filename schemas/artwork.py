@@ -13,7 +13,7 @@ class ArtworkUpdate(BaseModel):
     description: Optional[str] = None
 
 class ArtworkResponse(BaseModel):
-    id: PydanticObjectId = Field(alias="_id")
+    id: PydanticObjectId = Field(validation_alias="_id")
     title: str
     description: Optional[str] = None
     image_url: str

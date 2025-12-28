@@ -50,7 +50,8 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> Any:
     return {
         "token_type": "bearer",
         "refresh_token": refresh_token,
-        "access_token": access_token
+        "access_token": access_token,
+        "username": user.username
     }
 
 @router.post("/refresh", response_model=Token)

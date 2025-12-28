@@ -8,7 +8,7 @@ class UserCreate(BaseModel):
     password: str = Field(..., min_length=6)
 
 class UserResponse(BaseModel):
-    id: PydanticObjectId = Field(alias="_id")
+    id: PydanticObjectId = Field(validation_alias="_id")
     username: str
     email: EmailStr
     full_name: Optional[str] = None

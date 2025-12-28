@@ -58,7 +58,7 @@ ArtFolio is a production-ready RESTful API built with **FastAPI** and **MongoDB*
 │   └── mongodb.py            # Database Connection & Beanie Models
 ├── models/                   # Beanie ODM Models (User, Artwork)
 ├── schemas/                  # Pydantic Schemas
-└── main.py                   # Application Entry (Dynamic Loader)
+├── main.py                   # Application Entry (Dynamic Loader)
 ```
 
 ## 🚀 Getting Started
@@ -84,7 +84,7 @@ ArtFolio is a production-ready RESTful API built with **FastAPI** and **MongoDB*
 
    ```env
    # API & Security
-   SECRET_KEY=secret_key_change_this
+   SECRET_KEY=MEOW_MEOW_SECRET_KEY
    ACCESS_TOKEN_EXPIRE_MINUTES=30
    REFRESH_TOKEN_EXPIRE_DAYS=7
 
@@ -93,37 +93,71 @@ ArtFolio is a production-ready RESTful API built with **FastAPI** and **MongoDB*
    DB_NAME=artfolio
 
    # Cloudinary (Image Hosting)
-   CLOUDINARY_CLOUD_NAME=your_cloud_name
-   CLOUDINARY_API_KEY=your_api_key
-   CLOUDINARY_API_SECRET=your_api_secret
+   CLOUDINARY_CLOUD_NAME=MEOW_MEOW_CLOUD_NAME
+   CLOUDINARY_API_KEY=MEOW_MEOW_API_KEY
+   CLOUDINARY_API_SECRET=MEOW_MEOW_API_SECRET
    ```
 
-3. **Install Dependencies**:
+3. **How to Run**
 
-   ```bash
-   uv sync
-   # OR
-   pip install -r requirements.txt
-   ```
+   ### 3.1. Recommended (using uv)
 
-### Running the App
+   If you have `uv` installed, this is the fastest way to get started.
 
-Start the development server with auto-reload:
+      **3.1.1. Install Dependencies & Sync Environment**
 
-```bash
-uv run uvicorn main:app --reload
-```
+      ```bash
+      uv sync
+      ```
 
-- **Swagger UI**: [http://localhost:8000/docs](http://localhost:8000/docs)
+      **3.1.2. Run the Application**
+
+      ```bash
+      uv run uvicorn main:app --reload
+      ```
+
+      **3.1.3. Run Tests**
+
+      ```bash
+      uv run pytest
+      ```
+
+   ### 3.2. Alternative (using pip)
+
+   Standard Python workflow using virtual environments.
+
+      **3.2.1. Create and Activate Virtual Environment**
+
+      ```bash
+      # Windows
+      python -m venv venv
+      .\venv\Scripts\activate
+
+      # macOS/Linux
+      python3 -m venv venv
+      source venv/bin/activate
+      ```
+
+      **3.2.2. Install Dependencies**
+
+      ```bash
+      pip install -r requirements.txt
+      ```
+
+      **3.2.3. Run the Application**
+
+      ```bash
+      uvicorn main:app --reload
+      ```
+
+      **3.2.4. Run Tests**
+
+      ```bash
+      pytest
+      ```
+
+- **Swagger UI**:  [http://localhost:8000/docs](http://localhost:8000/docs)
 - **ReDoc**: [http://localhost:8000/redoc](http://localhost:8000/redoc)
-
-## 🧪 Testing
-
-The project includes a comprehensive test suite using `pytest`.
-
-```bash
-uv run pytest
-```
 
 ---
 

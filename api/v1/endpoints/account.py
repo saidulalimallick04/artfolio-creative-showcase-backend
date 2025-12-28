@@ -56,3 +56,14 @@ async def deactivate_account(
     current_user.is_active = False
     await current_user.save()
     return {"message": "User account deactivated successfully"}
+
+@router.patch("/reactivate", response_model=dict)
+async def reactivate_account(
+    current_user: User = Depends(get_current_user)
+) -> Any:
+    """
+    Reactivate own account.
+    """
+    current_user.is_active = True
+    await current_user.save()
+    return {"message": "User account reactivated successfully"}

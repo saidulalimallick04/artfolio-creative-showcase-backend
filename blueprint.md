@@ -140,13 +140,27 @@ This document outlines the step-by-step development plan for the **ArtFolio API*
     3. Standardize `API_DOCUMENTATION.md` with detailed JSON Request/Response examples for all endpoints.
     4. Finalize `Postman Collection` with new Account endpoints and valid testing variables.
 
+## 🌟 Phase 13: Final Polish & Advanced Features
+
+- **Goal**: Enhance API with search, randomization, and better frontend integration.
+- **Steps**:
+    1. Implement **Search Endpoints** with Regex support:
+        - `GET /api/v1/users/search?q=...`
+        - `GET /api/v1/artworks/search?q=...`
+    2. Implement **User Portfolio Endpoint**: `GET /api/v1/users/{user_id}/artworks`.
+    3. Implement **Account Reactivation**: `PATCH /api/v1/account-details/reactivate`.
+    4. **Frontend Optimization**:
+        - Include `username` in Login response.
+        - Standardize `_id` serialization to `id` globally.
+        - **Randomize** the `GET /artworks` feed for dynamic discovery.
+
 ---
 
 ## 👨‍💻 Author
 
 | Profile | Developer Name | Role | GitHub | LinkedIn | X |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| [![Sami](https://github.com/saidulalimallick04.png?size=75)](https://github.com/saidulalimallick04) | Saidul Ali Mallick (Sami) | Backend Developer & AIML Engineer & Team Lead | [@saidulalimallick04](https://github.com/saidulalimallick04) | [@saidulalimallick04](https://linkedin.com/in/saidulalimallick04) | [@saidulmallick04](https://x.com/saidulmallick04) |
+| [![Sami](https://github.com/saidulalimallick04.png?size=75)](https://github.com/saidulalimallick04) | Saidul Ali Mallick (Sami) | Backend Developer & AIML Engineer | [@saidulalimallick04](https://github.com/saidulalimallick04) | [@saidulalimallick04](https://linkedin.com/in/saidulalimallick04) | [@saidulmallick04](https://x.com/saidulmallick04) |
 
 > ❤️ I believe in building impact, not just writing code.
 > _💚 Backend Sage signing off.._
