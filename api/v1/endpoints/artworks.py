@@ -67,7 +67,7 @@ async def search_artworks(q: str) -> Any:
             {"description": {"$regex": q, "$options": "i"}}
         ]
     }
-    all_artworks = await Artwork.find(query).skip(skip).limit(limit).to_list()
+    all_artworks = await Artwork.find(query).to_list()
     
     # Populate owner links
     for art in all_artworks:
