@@ -21,20 +21,21 @@ def generate_users(count=100) -> List[dict]:
     users = []
     domains = ["gmail.com", "yahoo.com", "outlook.com", "example.com", "creative.io"]
     
-    indian_names = [
+    indian_names = list(set([
         "Aarav", "Vivaan", "Aditya", "Vihaan", "Arjun", "Sai", "Reyansh", "Ayaan", "Krishna", "Ishaan",
         "Shaurya", "Atharva", "Neel", "Aryan", "Dhruv", "Kabir", "Rohan", "Rahul", "Vikram", "Sanjay",
         "Diya", "Saanvi", "Anya", "Aadhya", "Pari", "Ananya", "Myra", "Riya", "Meera", "Ira",
-        "Ishita", "Kavya", "Anika", "Saanvi", "Aditi", "Priya", "Neha", "Sneha", "Pooja", "Anjali",
+        "Ishita", "Kavya", "Anika", "Aditi", "Priya", "Neha", "Sneha", "Pooja", "Anjali",
         "Raj", "Amit", "Suresh", "Ramesh", "Sunil", "Anil", "Deepak", "Vijay", "Manoj", "Ajay"
-    ]
+    ]))
     
     prefixes = [
         "Creative", "Artistic", "ColorOf", "Explorer", "DesignBy", "Hello", "TheReal", "Capture", 
         "Mystic", "Vivid", "Urban", "Digital", "Sketch", "Paint", "Draw", "Master", "Pro"
     ]
     
-    for i in range(1, count + 1):
+    seen_usernames = set()
+    while len(users) < count:
         name = random.choice(indian_names)
         
         # Randomly choose a username pattern
@@ -47,6 +48,11 @@ def generate_users(count=100) -> List[dict]:
             username = f"{name}{suffix}"
         else:
             username = f"{random.choice(prefixes)}{name}{random.randint(1, 99)}"
+            
+        if username in seen_usernames:
+            continue
+            
+        seen_usernames.add(username)
             
         # Ensure email matches username strictly as requested
         domain = random.choice(domains)
