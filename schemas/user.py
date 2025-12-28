@@ -22,6 +22,11 @@ class UserResponse(BaseModel):
         arbitrary_types_allowed=True
     )
 
+class UserSummary(BaseModel):
+    username: str
+    profile_image: Optional[str] = None
+
+
 class UserUpdate(BaseModel):
     full_name: Optional[str] = None
     bio: Optional[str] = None

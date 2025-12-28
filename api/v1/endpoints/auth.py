@@ -3,13 +3,11 @@ import jwt
 from jwt.exceptions import PyJWTError as JWTError
 from pydantic import ValidationError
 from schemas.token import TokenPayload
-from fastapi.security import OAuth2PasswordRequestForm
 from typing import Any
 from schemas.user import UserCreate, UserResponse
-from schemas.token import Token, RefreshTokenRequest
+from schemas.token import Token, RefreshTokenRequest, TokenRefreshResponse, LoginRequest
 from core.utils import create_user, authenticate_user
 from core.security import create_access_token, create_refresh_token
-from fastapi.security import OAuth2PasswordRequestForm
 from datetime import datetime, timedelta, timezone
 from core.config import settings
 from models.user import User
@@ -35,8 +33,8 @@ async def register(user_in: UserCreate) -> Any:
     return user
 
 @router.post("/login", response_model=Token)
-async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> Any:
-    user = await authenticate_user(form_data.username, form_data.password)
+async def login(login_data: LoginRequest = Body(...)) -> Any:
+    user = await authenticate_user(login_data.email, login_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -54,7 +52,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> Any:
         "username": user.username
     }
 
-@router.post("/refresh", response_model=Token)
+@router.post("/refresh", response_model=TokenRefreshResponse)
 async def refresh_token(request: RefreshTokenRequest) -> Any:
     """
     Get a new access token using a refresh token.

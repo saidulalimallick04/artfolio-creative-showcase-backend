@@ -2,7 +2,7 @@ from beanie import PydanticObjectId
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional
 from datetime import datetime
-from schemas.user import UserResponse
+from schemas.user import UserSummary
 
 class ArtworkCreate(BaseModel):
     title: str = Field(..., min_length=1, max_length=100)
@@ -17,7 +17,7 @@ class ArtworkResponse(BaseModel):
     title: str
     description: Optional[str] = None
     image_url: str
-    owner: UserResponse
+    owner: UserSummary
     created_at: datetime
 
     model_config = ConfigDict(

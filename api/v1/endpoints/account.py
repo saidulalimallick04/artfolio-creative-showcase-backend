@@ -7,7 +7,7 @@ from core.cloud import upload_image
 
 router = APIRouter()
 
-@router.get("/", response_model=UserResponse)
+@router.get("", response_model=UserResponse)
 async def read_account_details(
     current_user: User = Depends(get_current_user)
 ) -> Any:
@@ -16,11 +16,11 @@ async def read_account_details(
     """
     return current_user
 
-@router.patch("/", response_model=UserResponse)
+@router.patch("", response_model=UserResponse)
 async def update_account_details(
     full_name: Optional[str] = Form(None),
     bio: Optional[str] = Form(None),
-    image: Optional[UploadFile] = File(None),
+    profile_image: Optional[UploadFile] = File(None),
     current_user: User = Depends(get_current_user)
 ) -> Any:
     """
@@ -36,8 +36,8 @@ async def update_account_details(
         current_user.bio = bio
         updated = True
         
-    if image:
-        image_url = upload_image(image)
+    if profile_image:
+        image_url = upload_image(profile_image)
         current_user.profile_image = image_url
         updated = True
         

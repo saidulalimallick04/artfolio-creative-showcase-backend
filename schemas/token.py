@@ -7,9 +7,18 @@ class Token(BaseModel):
     token_type: str
     username: str
 
+class TokenRefreshResponse(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str
+
 class TokenPayload(BaseModel):
     sub: Optional[str] = None
     exp: Optional[int] = None
 
 class RefreshTokenRequest(BaseModel):
     refresh_token: str
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str

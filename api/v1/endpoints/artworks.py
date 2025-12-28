@@ -3,7 +3,6 @@ from typing import List, Any, Optional
 from models.artwork import Artwork
 from models.user import User
 from beanie import Link
-import random
 
 from schemas.artwork import ArtworkResponse, ArtworkUpdate
 from api.deps import get_current_user
@@ -43,14 +42,10 @@ async def read_artworks(
     Retrieve all artworks.
     """
     # Fetch all to apply randomization
-    all_artworks = await Artwork.find_all().to_list()
-    random.shuffle(all_artworks)
-    
-    # Apply pagination manually after shuffle
-    artworks = all_artworks[skip : skip + limit]
+    all_artworks = await Artwork.find_all().skip(skip).limit(skip+limit).to_list()
     # Manually fetch links to avoid Beanie crash/validation error
     # This is a workaround for the fetch_links bug
-    for art in artworks:
+    for art in all_artworks:
         if isinstance(art.owner, Link):
             # Fetch the user. Ideally use lookups but simple fetch for now
             # Note: accessign art.owner after this might still be a Link locally depending on Beanie behavior
@@ -59,7 +54,7 @@ async def read_artworks(
             user = await User.get(art.owner.ref.id)
             art.owner = user
             
-    return artworks
+    return all_artworks
 
 @router.get("/search", response_model=List[ArtworkResponse])
 async def search_artworks(q: str) -> Any:
@@ -72,15 +67,15 @@ async def search_artworks(q: str) -> Any:
             {"description": {"$regex": q, "$options": "i"}}
         ]
     }
-    artworks = await Artwork.find(query).to_list()
+    all_artworks = await Artwork.find(query).skip(skip).limit(limit).to_list()
     
     # Populate owner links
-    for art in artworks:
+    for art in all_artworks:
         if isinstance(art.owner, Link):
             user = await User.get(art.owner.ref.id)
             art.owner = user
             
-    return artworks
+    return all_artworks
 
 @router.get("/{id}", response_model=ArtworkResponse)
 async def read_artwork(id: str) -> Any:

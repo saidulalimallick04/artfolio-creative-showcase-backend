@@ -6,12 +6,12 @@ from pydantic import ValidationError
 from models.user import User
 from schemas.token import TokenPayload
 from core.config import settings
+from beanie import PydanticObjectId
 
 reusable_oauth2 = OAuth2PasswordBearer(
     tokenUrl=f"{settings.API_V1_STR}/auth/login"
 )
 
-from beanie import PydanticObjectId
 
 # ... imports ...
 

@@ -3,8 +3,7 @@
 		"_postman_id": "73b6db43-dede-48bd-8ae4-df7f60f93d5e",
 		"name": "ArtFolio API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "46697016",
-		"_collection_link": "https://saidulalimallick.postman.co/workspace/All_Collection_Developed_By_Sam~e9243a63-b8fa-4032-92be-30fa240f00e9/collection/46697016-73b6db43-dede-48bd-8ae4-df7f60f93d5e?action=share&source=collection_link&creator=46697016"
+		"_exporter_id": "46697016"
 	},
 	"item": [
 		{
@@ -55,29 +54,27 @@
 									"    console.log(\"Refresh token set successfully\");",
 									"}"
 								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "username",
-									"value": "test1@example.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "password123",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test1@example.com\",\n    \"password\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{base_url}}/auth/login",
@@ -201,18 +198,17 @@
 									"key": "image",
 									"description": "Optional: New profile image",
 									"type": "file",
-									"src": "/C:/Users/saidu/Downloads/Images/IMG_20250914_111824934_HDR.jpg"
+									"src": []
 								}
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/account-details/",
+							"raw": "{{base_url}}/account-details",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"account-details",
-								""
+								"account-details"
 							]
 						},
 						"description": "Update account details (full_name, bio, image)."
@@ -242,6 +238,31 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Reactivate Account",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/account-details/reactivate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account-details",
+								"reactivate"
+							]
+						},
+						"description": "Reactivate the user account."
+					},
+					"response": []
 				}
 			]
 		},
@@ -267,6 +288,32 @@
 					"response": []
 				},
 				{
+					"name": "Search Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/search?q=test",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "test",
+									"description": "Search term (username/fullname)"
+								}
+							]
+						},
+						"description": "Search users by username or full name."
+					},
+					"response": []
+				},
+				{
 					"name": "Get User Profile (By Username)",
 					"request": {
 						"method": "GET",
@@ -281,6 +328,26 @@
 								"testuser"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Artworks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}/artworks",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}",
+								"artworks"
+							]
+						},
+						"description": "Get all artworks by a specific user."
 					},
 					"response": []
 				}
@@ -316,7 +383,7 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/C:/Users/saidu/Downloads/Images/1305088.jpeg"
+									"src": []
 								}
 							]
 						},
@@ -348,6 +415,32 @@
 								"artworks"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Artworks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artworks/search?q=masterpiece",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artworks",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "masterpiece",
+									"description": "Search term (title/description)"
+								}
+							]
+						},
+						"description": "Search artworks by title or description."
 					},
 					"response": []
 				},
@@ -398,7 +491,7 @@
 									"key": "image",
 									"description": "Optional: Upload new image to replace existing one",
 									"type": "file",
-									"src": "/C:/Users/saidu/Downloads/Images/Leo-1.jpg"
+									"src": []
 								}
 							]
 						},
@@ -460,6 +553,11 @@
 		},
 		{
 			"key": "artwork_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
 			"value": "",
 			"type": "string"
 		}

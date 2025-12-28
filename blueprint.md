@@ -153,6 +153,28 @@ This document outlines the step-by-step development plan for the **ArtFolio API*
         - Include `username` in Login response.
         - Standardize `_id` serialization to `id` globally.
         - **Randomize** the `GET /artworks` feed for dynamic discovery.
+    5. **Security/Performance Optimization**:
+        - Optimize **Refresh Token** endpoint to exclude `username` from response, avoiding unnecessary database lookups.
+
+## 🏁 Phase 14: System Validation & Final Polish
+
+- **Goal**: Verify end-to-end functionality and prepare for delivery.
+- **Steps**:
+    1. **Mock Data Generation**:
+        - Create and refine `mock_data/populate_db.py`.
+        - Generate 100+ Realistic User profiles.
+        - Generate 500+ Artworks with Unsplash integration.
+        - Ensure fair distribution (everyone gets at least one artwork).
+    2. **Final API Documentation Update**:
+        - Remove deprecated fields (e.g., `is_artist`).
+        - Fix endpoint paths (e.g., remove trailing slashes).
+        - Update Postman Collection variables and examples.
+    3. **Bug Fixing & QA**:
+        - Fix redirect issues on `PATCH /account-details`.
+        - Resolve duplication in mock data.
+    4. **Submission Preparation**:
+        - Final `README.md` review.
+        - Ensure all tests pass.
 
 ---
 

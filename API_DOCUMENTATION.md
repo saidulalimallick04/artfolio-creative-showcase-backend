@@ -5,7 +5,7 @@
 | Resource | Endpoints | Description |
 | :--- | :--- | :--- |
 | **Auth** | `/auth/` | Register, Login, Token Refresh |
-| **Account** | `/account-details/` | Manage your own profile (Get, Update, Deactivate) |
+| **Account** | `/account-details` | Manage your own profile (Get, Update, Deactivate) |
 | **Users** | `/users/` | Public user profiles & listings |
 | **Artworks** | `/artworks/` | Create, browse, update, and delete artworks |
 
@@ -34,17 +34,23 @@ Create a new account.
 Authenticate and receive Access & Refresh tokens.
 
 - **Endpoint**: `POST /auth/login`
-- **Body** (`application/x-www-form-urlencoded` - OAuth2 Standard):
-  - `username`: (Your Email)
-  - `password`: (Your Password)
+- **Body** (`application/json`):
+
+  ```json
+  {
+    "email": "user@example.com",
+    "password": "password123"
+  }
+  ```
+
 - **Response**:
 
 ```json
 {
-  "access_token": "eyJhbGciOiJIUzI1Ni...",
+  "access_token": "...",
+  "refresh_token": "...",
   "token_type": "bearer",
-  "refresh_token": "eyJhbGciOiJIUzI1Ni...",
-  "username": "johndoe"
+  "username": "user123"
 }
 ```
 
@@ -82,7 +88,6 @@ Fetch your own private profile (includes email).
   "full_name": "Art Lover",
   "bio": "I love painting.",
   "is_active": true,
-  "is_artist": false,
   "profile_image": "https://res.cloudinary.com/..."
 }
 ```
@@ -142,7 +147,7 @@ Browse active community members.
     "username": "artist_one",
     "full_name": "The Artist",
     "bio": "Digital Creator",
-    "is_artist": true,
+
     "profile_image": "https://..."
   },
   ...
@@ -172,7 +177,6 @@ View a specific user's public details.
   "username": "artist_one",
   "full_name": "The Artist",
   "bio": "Digital Creator",
-  "is_artist": true,
   "profile_image": "https://..."
 }
 ```
@@ -223,36 +227,12 @@ Upload a new piece. Requires Auth.
   "title": "Sunset",
   "description": "Oil on canvas",
   "image_url": "https://res.cloudinary.com/...",
-  "owner": {
-    "username": "artlover99",
-    "id": "64f1a..."
-  },
-  "created_at": "2023-10-01T12:00:00Z"
-}
-```
-
-### 2. List Artworks
-
-Feed of artworks.
-
-- **Endpoint**: `GET /artworks`
-- **Query Params**: `skip`, `limit`
-- **Response**:
-
-```json
-[
-  {
-    "id": "6512b3c...",
-    "title": "Sunset",
-    "description": "Oil on canvas",
-    "image_url": "https://res.cloudinary.com/...",
     "owner": {
-      "id": "64f1a...",
-      "username": "artlover99"
+      "username": "artlover99",
+      "profile_image": "https://..."
     },
-    "created_at": "2023-10-01T12:00:00Z"
-  }
-]
+    ...
+}
 ```
 
 ### 3. Search Artworks
@@ -272,8 +252,8 @@ Search artworks by title or description.
     "description": "Oil on canvas",
     "image_url": "https://res.cloudinary.com/...",
     "owner": {
-      "id": "64f1a...",
-      "username": "artlover99"
+      "username": "artlover99",
+      "profile_image": "https://..."
     },
     "created_at": "2023-10-01T12:00:00Z"
   }
@@ -295,8 +275,8 @@ View a specific artwork.
   "description": "Oil on canvas",
   "image_url": "https://res.cloudinary.com/...",
   "owner": {
-    "id": "64f1a...",
-    "username": "artlover99"
+    "username": "artlover99",
+    "profile_image": "https://..."
   },
   "created_at": "2023-10-01T12:00:00Z"
 }
@@ -319,8 +299,8 @@ Update an artwork you own. Requires Auth.
   "description": "Oil on canvas",
   "image_url": "https://res.cloudinary.com/...",
   "owner": {
-    "id": "64f1a...",
-    "username": "artlover99"
+    "username": "artlover99",
+    "profile_image": "https://..."
   },
   "created_at": "2023-10-01T12:00:00Z"
 }
