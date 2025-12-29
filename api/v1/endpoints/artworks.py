@@ -11,7 +11,7 @@ from core.cloud import upload_image
 
 router = APIRouter()
 
-@router.post("/", response_model=ArtworkResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=ArtworkResponse, status_code=status.HTTP_201_CREATED)
 async def create_artwork(
     title: str = Form(...),
     description: Optional[str] = Form(None),
@@ -33,12 +33,12 @@ async def create_artwork(
     await artwork.create()
     return artwork
 
-@router.get("/", response_model=List[ArtworkResponse])
+@router.get("", response_model=List[ArtworkResponse])
 async def read_artworks(
     skip: int = 0,
     limit: int = 100
 ) -> Any:
-    """
+    """ 
     Retrieve all artworks.
     """
     # Fetch all to apply randomization
